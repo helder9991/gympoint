@@ -1,4 +1,5 @@
 import jwt from 'jsonwebtoken';
+import * as Yup from 'yup';
 
 // Importação do segredo e data de expiração da autenticação JWT
 import authConfig from '../../config/auth';
@@ -8,6 +9,16 @@ import User from '../models/User';
 
 class SessionController {
   async store(req, res) {
+    const sessionSchema = Yup.object().shape({
+      email: Yup.string()
+        .email()
+        .required(),
+      password: Yup.string().required(),
+    });
+
+    if (!(await sessionSchema.isValid(req.body)))
+      return res.status(400).json({ error: 'Validation fail' });
+
     const { email, password } = req.body;
 
     // Procura o usuario no banco de dados a partir do email
