@@ -7,6 +7,7 @@ import PlanController from './app/controllers/PlanController';
 import EnrollmentController from './app/controllers/EnrollmentController';
 import HelpOrderAdmController from './app/controllers/HelpOrderAdmController';
 import HelpOrderStuController from './app/controllers/HelpOrderStuController';
+import CheckinController from './app/controllers/CheckinController';
 
 // Importação dos middlewares
 import authMiddleware from './app/middlewares/auth';
@@ -17,6 +18,9 @@ routes.post('/session', SessionController.store);
 
 routes.get('/students/:id/help-orders', HelpOrderStuController.index);
 routes.post('/students/:id/help-orders', HelpOrderStuController.store);
+
+routes.get('/students/:id/checkins', CheckinController.index);
+routes.post('/students/:id/checkins', CheckinController.store);
 
 routes.use(authMiddleware);
 
